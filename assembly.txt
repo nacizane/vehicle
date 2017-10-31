@@ -1,0 +1,455 @@
+TITLE Program Template     (template.asm)
+
+INCLUDE Irvine32.inc
+
+changeColor PROTO color:dword
+
+.data
+val1 dword ?
+val2 dword ?
+val3 dword ?
+val4 dword ?
+val5 dword ?
+v1 dword ?
+v2 dword ?
+v3 dword ?
+v4 dword ?
+v5 dword ?
+str1 BYTE "yesil  ",0
+str2 BYTE "beyaz  ",0
+str3 BYTE "kirmizi  ",0
+str4 BYTE "Enter::",0
+.code
+main PROC
+
+call randomize
+mov eax,10
+call randomrange
+mov val1,eax
+jmp random2
+
+random2:
+call randomize
+mov eax,10
+call randomrange
+cmp eax,val1
+je random2
+mov val2,eax
+jmp random3
+
+random3:
+call randomize
+mov eax,10
+call randomrange
+cmp eax,val1
+je random3
+cmp eax,val2
+je random3
+mov val3,eax
+jmp random4
+
+random4:
+call randomize
+mov eax,10
+call randomrange
+cmp eax,val1
+je random4
+cmp eax,val2
+je random4
+cmp eax,val3
+je random4
+mov val4,eax
+jmp random5
+
+random5:
+call randomize
+mov eax,10
+call randomrange
+cmp eax,val1
+je random5
+cmp eax,val2
+je random5
+cmp eax,val3
+je random5
+cmp eax,val4
+je random5
+mov val5,eax
+;;;;;;;;;;;;;;;;;;;;;
+mov ecx,6
+add val1,30h
+add val2,30h
+add val3,30h
+add val4,30h
+add val5,30h
+lo1:
+call zaa
+mov eax ,black+(white) ;restore colour to default
+call settextcolor
+mov v1,0
+mov v2,0
+mov v3,0
+mov v4,0
+mov v5,0
+mov eax,0
+loop lo1
+
+
+exit	
+
+main ENDP
+
+
+
+zaa PROC
+
+
+mov edx ,OFFSET str4
+call writestring
+
+char1:
+call readchar
+cmp al,30h
+jb error1
+cmp al,39h
+ja error1
+
+call writechar
+mov v1,eax
+jmp char2
+
+char2:
+call readchar
+cmp al,30h
+jb error2
+cmp al,39h
+ja error2
+call writechar
+mov v2,eax
+jmp char3
+
+char3:
+call readchar
+cmp al,30h
+jb error3
+cmp al,39h
+ja error3
+call writechar
+mov v3,eax
+jmp char4
+
+char4:
+call readchar
+cmp al,30h
+jb error4
+cmp al,39h
+ja error4
+call writechar
+mov v4,eax
+
+jmp char5
+
+char5:
+call readchar
+cmp al,30h
+jb error5
+cmp al,39h
+ja error5
+call writechar
+mov v5,eax
+jmp start
+
+;;;;;;;;;;;;;;;;;
+
+error1:
+call dumpregs
+mov al,7
+call writechar
+jmp char1
+
+error2:
+call dumpregs
+mov al,7
+call writechar
+jmp char2
+
+error3:
+call dumpregs
+mov al,7
+call writechar
+jmp char3
+
+error4:
+call dumpregs
+mov al,7
+call writechar
+jmp char4
+
+error5:
+call dumpregs
+mov al,7
+call writechar
+jmp char5
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+start:
+
+
+;mov eax,val1
+;call dumpregs
+;mov eax,val2
+;call dumpregs
+;mov eax,val3
+;call dumpregs
+;mov eax,val4
+;call dumpregs
+;mov eax,val5
+;call dumpregs
+
+
+start1:
+mov eax,v1
+cmp val1,eax
+je yesil1
+cmp val2,eax
+je beyaz1
+cmp val3,eax
+je beyaz1
+cmp val4,eax
+je beyaz1
+cmp val5,eax
+je beyaz1
+jmp red1
+
+jmp start2
+
+start2:
+mov eax,v2
+cmp val1,eax
+je beyaz2
+cmp val2,eax
+je yesil2
+cmp val3,eax
+je beyaz2
+cmp val4,eax
+je beyaz2
+cmp val5,eax
+je beyaz2
+jmp red2
+jmp start3
+
+start3:
+mov eax,v3
+cmp val1,eax
+je beyaz3
+cmp val2,eax
+je beyaz3
+cmp val3,eax
+je yesil3
+cmp val4,eax
+je beyaz3
+cmp val5,eax
+je beyaz3
+jmp red3
+jmp start4
+
+start4:
+mov eax,v4
+cmp val1,eax
+je beyaz4
+cmp val2,eax
+je beyaz4
+cmp val3,eax
+je beyaz4
+cmp val4,eax
+je yesil4
+cmp val5,eax
+je beyaz4
+jmp red4
+jmp start5
+
+start5:
+mov eax,v5
+cmp val1,eax
+je beyaz5
+cmp val2,eax
+je beyaz5
+cmp val3,eax
+je beyaz5
+cmp val4,eax
+je beyaz5
+cmp val5,eax
+je yesil5
+jmp red5
+jmp finish
+
+yesil1:
+push eax
+mov eax ,green
+call settextcolor
+pop eax
+
+sub eax,48
+call writedec
+mov eax ,black+(white) ;restore colour to default
+call settextcolor
+jmp start2
+
+beyaz1:
+push eax
+mov eax ,white 
+call settextcolor
+pop eax
+sub eax,48
+call writedec
+mov eax ,black+(white) ;restore colour to default
+call settextcolor
+jmp start2
+
+
+red1:
+push eax
+mov eax,red
+call settextcolor
+pop eax
+sub eax,48
+call writedec
+mov eax ,black+(white) ;restore colour to default
+call settextcolor
+jmp start2
+
+yesil2:
+push eax
+mov eax ,green
+call settextcolor
+pop eax
+sub eax,48
+call writedec
+mov eax ,black+(white) ;restore colour to default
+call settextcolor
+jmp start3
+
+beyaz2:
+push eax
+mov eax ,white 
+call settextcolor
+pop eax
+sub eax,48
+call writedec
+mov eax ,black+(white) ;restore colour to default
+call settextcolor
+jmp start3
+
+red2:
+push eax
+mov eax,red
+call settextcolor
+pop eax
+sub eax,48
+call writedec
+mov eax ,black+(white) ;restore colour to default
+call settextcolor
+jmp start3
+
+yesil3:
+push eax
+mov eax ,green
+call settextcolor
+pop eax
+sub eax,48
+call writedec
+mov eax ,black+(white) ;restore colour to default
+call settextcolor
+jmp start4
+
+beyaz3:
+push eax
+mov eax ,white 
+call settextcolor
+pop eax
+sub eax,48
+call writedec
+mov eax ,black+(white) ;restore colour to default
+call settextcolor
+jmp start4
+
+red3:
+push eax
+mov eax,red
+call settextcolor
+pop eax
+sub eax,48
+call writedec
+mov eax ,black+(white) ;restore colour to default
+call settextcolor
+jmp start4
+
+yesil4:
+push eax
+mov eax ,green
+call settextcolor
+pop eax
+sub eax,48
+call writedec
+mov eax ,black+(white) ;restore colour to default
+call settextcolor
+jmp start5
+
+beyaz4:
+push eax
+mov eax ,white 
+call settextcolor
+pop eax
+sub eax,48
+call writedec
+mov eax ,black+(white) ;restore colour to default
+call settextcolor
+jmp start5
+
+red4:
+push eax
+mov eax,red
+call settextcolor
+pop eax
+sub eax,48
+call writedec
+mov eax ,black+(white) ;restore colour to default
+call settextcolor
+jmp start5
+
+yesil5:
+push eax
+mov eax ,green
+call settextcolor
+pop eax
+sub eax,48
+call writedec
+mov eax ,black+(white) ;restore colour to default
+call settextcolor
+jmp finish
+
+beyaz5:
+push eax
+mov eax ,white 
+call settextcolor
+pop eax
+sub eax,48
+call writedec
+mov eax ,black+(white) ;restore colour to default
+call settextcolor
+jmp finish
+
+red5:
+push eax
+mov eax,red
+call settextcolor
+pop eax
+sub eax,48
+call writedec
+mov eax ,black+(white) ;restore colour to default
+call settextcolor
+jmp finish
+
+finish:
+ret
+ zaa ENDP
+
+END main
