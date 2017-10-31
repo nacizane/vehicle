@@ -437,7 +437,7 @@ mov eax ,black+(white) ;restore colour to default
 call settextcolor
 jmp finish
 
-red5:
+red655:
 push eax
 mov eax,red
 call settextcolor
