@@ -426,7 +426,7 @@ mov eax ,black+(white) ;restore colour to default
 call settextcolor
 jmp finish
 
-beyaz5:
+beyaz55:
 push eax
 mov eax ,white 
 call settextcolor
